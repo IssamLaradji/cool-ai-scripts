@@ -9,15 +9,21 @@ import faiss
 
 from sentence_transformers import SentenceTransformer
 
+"""
+Do these steps:
+1) Set up a Together API key from https://together.ai/
+"""
+together_api_key = os.environ.get("TOGETHER_API_KEY")
 
-def run_rag(data_dict: dict, prompt: str, api_key: str = None, top_k: int = 1):
+
+def run_rag(data_dict: dict, prompt: str):
     """
     Run RAG system: process documents, create embeddings, search, and generate answer.
 
     """
 
     # Stage 0: Initialize Together AI client for LLM completions
-    client = Together(api_key=api_key)
+    client = Together(api_key=together_api_key)
 
     # Stage 1: Load sentence transformer model for creating embeddings
     # ------------------------------------------------------------
@@ -145,6 +151,6 @@ if __name__ == "__main__":
     }
 
     question = "What is interesting about a banana?"
-    answer = run_rag(data_dict, question, api_key=os.environ.get("TOGETHER_API_KEY"))
+    answer = run_rag(data_dict, question)
     print(f"\n🤖 Answer: {answer}\n")
     print("-" * 50)
